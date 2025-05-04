@@ -79,7 +79,7 @@ public class PersonController {
     }
 
     @GetMapping("/search")
-    public Page<Person> searchPerson(
+    public ResponseEntity<?> searchPerson(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) Integer minAge,
             @RequestParam(required = false) Integer maxAge,
@@ -90,5 +90,6 @@ public class PersonController {
     ) {
         Pageable pageable = PageRequest.of(page,size);
         Page<Person> search = personService.search(name, minAge, maxAge, city, pageable);
+        return new ResponseEntity<>(search,HttpStatus.OK);
     }
 }
